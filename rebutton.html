@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>re:Button - A Renascence Computing Project</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .rebutton-hero {
+            background: #000;
+            color: white;
+            padding: 1rem 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rebutton-logo {
+            font-family: 'Arial', sans-serif;
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .rebutton-logo .re {
+            color: white;
+        }
+
+        .rebutton-logo .colon {
+            color: white;
+        }
+
+        .rebutton-logo .b {
+            color: #ff0000;
+        }
+
+        .rebutton-logo .u1 {
+            color: #ff8800;
+        }
+
+        .rebutton-logo .t1 {
+            color: #ffdd00;
+        }
+
+        .rebutton-logo .t2 {
+            color: #88ff00;
+        }
+
+        .rebutton-logo .o {
+            color: #00ff88;
+        }
+
+        .rebutton-logo .n {
+            color: #0088ff;
+        }
+
+        .rebutton-tagline {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .rebutton-description {
+            max-width: 800px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .rebutton-logo {
+                font-size: 2.5rem;
+            }
+            
+            .rebutton-tagline {
+                font-size: 1.2rem;
+            }
+            
+            .rebutton-description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="rebutton-logo">
+            <span class="re">re</span><span class="colon">:</span><span class="b">B</span><span class="u1">u</span><span class="t1">t</span><span class="t2">t</span><span class="o">o</span><span class="n">n</span>
+        <p class="rebutton-tagline">The Interface Revolution</p>
+        </div>
+
+    </header>
+
+    <main>
+
+        <section class="content">
+            <h2>Physical Computing Meets AI</h2>
+            <p class="lead">re:Button transforms physical MIDI controllers into intelligent command centers for your digital life—similar to StreamDeck, but open-source, DIY, and much more powerful.</p>
+            
+            <div class="principle">
+                <h3>The Concept</h3>
+                <p>Imagine creating your own keyboard but instead of regular keys, it triggers smart shortcuts that help you operate your life. Press a button to check your bank balance, turn a knob to control system volume, launch project workspaces, control media playback, or trigger custom workflows with a single touch.</p>
+            </div>
+
+
+
+            <div class="principle">
+                <h3>How It Works</h3>
+                <p>Connect any MIDI controller to your computer. re:Button listens for MIDI events and executes configured actions—from simple keystrokes to complex shell commands, API calls, or AI-powered workflows. The Presonus ATOM (US$ 136) offers 16 pads, 8 knobs, and 20 buttons, but any MIDI device works.</p>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2>Real-World Examples</h2>
+            
+            <div class="pillars">
+                <div class="pillar">
+                    <h3>Financial Shortcuts</h3>
+                    <p>Press a button to hear your bank balance or credit card balance via text-to-speech, pulling data from your re:Money API.</p>
+                </div>
+                <div class="pillar">
+                    <h3>Project Launchers</h3>
+                    <p>Dedicated buttons for each workspace—open Kiro with specific projects instantly without navigating menus.</p>
+                </div>
+                <div class="pillar">
+                    <h3>Media Control</h3>
+                    <p>Control Spotify (play, pause, next track) and system volume without leaving your keyboard.</p>
+                </div>
+                <div class="pillar">
+                    <h3>Quick Responses</h3>
+                    <p>Type "yes", "no", or "thanks" with a single button press—perfect for meetings and rapid responses.</p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="content">
+            <h2>Configuration Made Simple</h2>
+            
+            <div class="principle">
+                <h3>Markdown-Based Mapping</h3>
+                <p>Define your shortcuts in a simple markdown file (<code>rebutton-config.md</code>). Each line maps a MIDI note or control to an action:</p>
+                <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto; color: #333;">
+# Quick Responses
+- 109[control_change]=osascript -e 'tell application "System Events" to keystroke "y"'
+- 107[control_change]=osascript -e 'tell application "System Events" to keystroke "n"'
+
+# Launch Apps
+- 96[note_on]=/Applications/Kiro.app/Contents/MacOS/Electron ~/code/project
+- 92[note_on]=open -a "Microsoft PowerPoint"
+
+# Media Control
+- 86[note_on]=open -a Spotify && osascript -e 'tell application "Spotify" to play'
+- 14[control_change]=osascript -e "set volume output volume $value"
+
+# Smart Shortcuts
+- 112[note_on]=balance=$(curl -s http://localhost:8080/api/balance | jq -r '.balance'); python3 text_to_speech.py "Your balance is $balance"</pre>
+                <p style="margin-top: 1rem;">The format is simple: <code>note_number[event_type]=command</code>. Variables like <code>$value</code> and <code>$velocity</code> get replaced with actual MIDI values.</p>
+            </div>
+- 14[control_change]=osascript -e "set volume output volume $value"</pre>
+            </div>
+
+            <div class="principle">
+                <h3>Using Kiro CLI for Mapping</h3>
+                <p>Leverage Kiro's AI capabilities to help you create and manage your button mappings:</p>
+                <ul style="text-align: left; max-width: 800px; margin: 1rem auto;">
+                    <li><strong>Discover MIDI events:</strong> Run <code>rebutton-mqtt.py</code> to see which notes/controls your device sends</li>
+                    <li><strong>Generate commands:</strong> Ask Kiro to create shell commands for your desired actions</li>
+                    <li><strong>Build workflows:</strong> Use Kiro to chain multiple commands or integrate with APIs</li>
+                    <li><strong>Optimize mappings:</strong> Let Kiro suggest ergonomic button layouts based on usage patterns</li>
+                </ul>
+                <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto; margin-top: 1rem; color: #333;">
+# Ask Kiro to help
+kiro-cli chat
+
+> "Help me create a rebutton config that opens my project folders 
+   on buttons 96-99 and controls Spotify on buttons 86-87"
+
+> "Generate a command to check my bank balance via API and 
+   speak it using text-to-speech"
+
+> "I have 16 pads. Suggest an ergonomic layout for: 
+   4 project launchers, 4 media controls, 4 quick responses"</pre>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2>Example Use Cases</h2>
+            
+            <div class="principle">
+                <h3>Most-Used Shortcuts</h3>
+                <ul style="text-align: left; max-width: 800px; margin: 1rem auto;">
+                    <li><strong>Project launchers:</strong> 4 different workspaces with dedicated buttons</li>
+                    <li><strong>Volume control knob:</strong> Much better than keyboard shortcuts</li>
+                    <li><strong>Quick responses:</strong> "Yes/No/Thanks" saves typing in meetings</li>
+                    <li><strong>Photo capture:</strong> Quick photos with Photo Booth for video calls</li>
+                    <li><strong>Smart home control:</strong> Send MQTT messages to control lights and devices</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2>Getting Started</h2>
+            
+            <div class="principle">
+                <h3>What You Need</h3>
+                <ul style="text-align: left; max-width: 800px; margin: 1rem auto;">
+                    <li>Any MIDI controller (Presonus ATOM recommended, US$ 136)</li>
+                    <li>Python 3 with <code>mido</code>, <code>python-rtmidi</code>, and <code>paho-mqtt</code> libraries</li>
+                    <li>Optional: MQTT broker for IoT integration and debugging</li>
+                </ul>
+            </div>
+
+            <div class="principle">
+                <h3>Installation</h3>
+                <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto; color: #333;">
+pip install mido python-rtmidi paho-mqtt
+
+# On macOS, you might also need:
+brew install portmidi</pre>
+            </div>
+
+            <div class="principle">
+                <h3>Quick Start</h3>
+                <ol style="text-align: left; max-width: 800px; margin: 1rem auto;">
+                    <li>Connect your MIDI controller via USB</li>
+                    <li>Run <code>python3 rebutton-mqtt.py</code> to discover button numbers</li>
+                    <li>Create your <code>rebutton-config.md</code> file with mappings</li>
+                    <li>Run <code>python3 rebutton.py</code> and start pressing buttons</li>
+                </ol>
+            </div>
+
+            <div class="principle">
+                <h3>The Code (Less Than 30 Lines)</h3>
+                <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto; color: #333;">
+#!/usr/bin/env python3
+import mido, re, subprocess
+
+def parse_config(filename):
+    config = {}
+    with open(filename) as f:
+        for line in f:
+            match = re.match(r'^-\s*(\d+)\[(\w+)\]=(.+)$', line.strip())
+            if match:
+                note, event_type, command = match.groups()
+                config[(int(note), event_type)] = command.strip()
+    return config
+
+config = parse_config("rebutton-config.md")
+midi_port = mido.open_input(mido.get_input_names()[0])
+
+for msg in midi_port:
+    key = (getattr(msg, 'note', None) or getattr(msg, 'control', None), msg.type)
+    if key in config:
+        command = config[key].replace('$value', str(getattr(msg, 'value', '')))
+        subprocess.Popen(command, shell=True)</pre>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2>Why This Matters</h2>
+            <p class="lead">re:Button is part of the Renascence Computing vision—rethinking how we interact with computers to serve our lives, not the other way around.</p>
+            
+            <div class="principle">
+                <h3>Tangible Interface</h3>
+                <p>Physical buttons create a tangible interface to your digital life. Instead of context-switching between apps and memorizing shortcuts, you have dedicated controls for what matters most.</p>
+            </div>
+
+            <div class="principle">
+                <h3>AI-Powered Evolution</h3>
+                <p>Combined with AI (via Kiro), you can rapidly prototype and evolve your interface. The barrier between "I wish I could..." and "Done!" shrinks to minutes.</p>
+            </div>
+
+            <div class="principle">
+                <h3>Infinitely Customizable</h3>
+                <p>Your button layout will be completely different from anyone else's because your life and workflows are unique. What will you put on your buttons?</p>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2>Join the Revolution</h2>
+            <p class="lead">re:Button is open source and actively developed as part of the Renascence Computing ecosystem.</p>
+            <p>Contribute your configurations, suggest features, or build integrations with re:OS and re:Money. Read the full <a href="https://dev.to" target="_blank">step-by-step guide on dev.to</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Renascence Computing &copy; 2026 - The Digital Reborn</p>
+        <p class="links">
+            <a href="https://kiro.dev" target="_blank">kiro.dev</a> | 
+            <a href="https://bit.ly/intro-to-remoney" target="_blank">re:Money</a> | 
+            <a href="https://bit.ly/modern-ai" target="_blank">Modernization</a>
+        </p>
+    </footer>
+
+    <script>
+        function toggleCommunity() {
+            // This function would need to be implemented if community section is added to this page
+            console.log('Community toggle not implemented on this page');
+        }
+    </script>
+</body>
+</html>
